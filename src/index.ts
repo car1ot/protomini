@@ -43,11 +43,11 @@ export class ProtoMini {
   }
 
   private encodeString(str: string): string {
-    return this.keysMapping[str] ?? str;
+    return this.keysMapping[str] || str;
   }
 
   private decodeString(encodedStr: string): string {
-    return this.reverseKeysMapping[encodedStr] ?? encodedStr;
+    return this.reverseKeysMapping[encodedStr] || encodedStr;
   }
 
   private transformObject(
