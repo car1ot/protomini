@@ -1,4 +1,4 @@
-name: module
+name: Module CI/CD
 
 on:
   push:
@@ -6,31 +6,62 @@ on:
       - v0.**
 
 jobs:
-  build:
+  build-and-test:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    strategy:
+      matrix:
+        node: [16, 18] # Test against multiple Node.js versions
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Cache Node.js modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+          registry-url: 'https://npm.pkg.github.com'
+
+      - name: Install dependencies and run tests
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          npm ci
+          npm run lint
+          npm run build
+
+  deploy:
+    name: Deploy to NPM
+    needs: build-and-test # Make sure build and test pass before deploying
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
 
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup node environment
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
           registry-url: 'https://npm.pkg.github.com'
 
-      - name: Build and test
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.ROBOT_PAT }}
-        run: |
-          npm ci
-          npm run lint
-          npm run build
-      - name: Deploy
+      - name: Publish package
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          npm publish
+        run: npm publish
