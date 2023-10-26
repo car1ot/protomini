@@ -1,0 +1,42 @@
+{
+  "name": "protomini",
+  "version": "0.0.1",
+  "description": "Minimize and optimize and simplify and miniaturize your network packets for optimal speed and efficiency with ProtoMini.",
+  "main": "index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "jest",
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/car1ot/protomini.git"
+  },
+  "keywords": [
+    "networking",
+    "packets",
+    "optimization",
+    "compression",
+    "minification",
+    "encoding",
+    "decoding",
+    "data-transmission",
+    "performance",
+    "real-time",
+    "game-development"
+  ],
+  "author": "https://github.com/car1ot",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/car1ot/protomini/issues"
+  },
+  "homepage": "https://github.com/car1ot/protomini#readme",
+  "devDependencies": {
+    "@types/jest": "^29.5.6",
+    "@types/node": "^20.8.9",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.2.2"
+  }
+}

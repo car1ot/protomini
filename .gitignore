@@ -1,0 +1,20 @@
+# Node modules
+node_modules/
+
+# Build files
+dist/
+
+# Logs
+npm-debug.log
+yarn-error.log
+
+# IDE files
+.idea/
+.vscode/
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+
+#
