@@ -70,4 +70,4 @@ jobs:
       - name: Publish package
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
-        run: npm publish --registry=https://npm.pkg.github.com/
+        run: npm publish --registry=https://npm.pkg.github.com/ --access public
