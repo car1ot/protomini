@@ -21,6 +21,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Clean npm cache
+        run: npm cache clean -f
+
       - name: Cache Node.js modules
         uses: actions/cache@v3
         with:
@@ -34,6 +37,9 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
           registry-url: 'https://npm.pkg.github.com'
+
+      - name: Check npm version
+        run: npm --version
 
       - name: Install dependencies and run tests
         env:
