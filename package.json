@@ -1,6 +1,6 @@
 {
   "name": "protomini",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Minimize and optimize and simplify and miniaturize your network packets for optimal speed and efficiency with ProtoMini.",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
