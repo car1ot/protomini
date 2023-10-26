@@ -29,11 +29,19 @@ npm install protomini
 ```typescript
 import { ProtoMini } from 'protomini';
 
-const p = new ProtoMini({ foo: "f", bar: "b" });
+// Setup ProtoMini
+const keyToValueMap = { foo: "f", bar: "b" };
+const protoMini = new ProtoMini(keyToValueMap);
 
+// Do magic encode/decode your json
 const originalPacket = { foo: ["bar", { bar: "bar" }] };
-const encoded = p.encodePacket(originalPacket);
-const decoded = p.decodePacket(encoded);
+const encodedPacket = protoMini.encodePacket(originalPacket); // {"f":["b",{"b":"b"}}}
+const decodedPacket = protoMini.decodePacket(encodedPacket); // {"foo":["bar",{"bar":"bar"}]}
+
+// Also it doing magic encode/decode your text
+const originalText = "foo omg, yeah, bar bar, so-so";
+const encodedPacket = protoMini.encodePacket(originalText); // "f omg, yeah, b b, so-so"
+const decodedPacket = protoMini.decodePacket(encodedPacket); // "foo omg, yeah, bar bar, so-so"
 ```
 
 ## API Reference
