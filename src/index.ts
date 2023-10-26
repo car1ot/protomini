@@ -3,50 +3,65 @@ type Primitive = string | number | bigint | boolean;
 type Encodable = Primitive | Encodable[] | { [key: string]: Encodable };
 
 export class ProtoMini {
-  private keysMapping: KeyMapping;
+  private reverseKeysMapping: { [key: string]: string };
 
-  constructor(keysMapping: KeyMapping) {
-    this.keysMapping = keysMapping;
+  constructor(private keysMapping: KeyMapping) {
+    this.reverseKeysMapping = {};
+    for (const key in this.keysMapping) {
+      this.reverseKeysMapping[this.keysMapping[key]] = key;
+    }
   }
 
-  public encodePacket(packet: Encodable): string {
-    const encodedPacket = this.replaceKeysAndValues(packet, true);
-    return JSON.stringify(encodedPacket);
+  encodePacket(packet: Encodable): string {
+    return JSON.stringify(this.transform(packet, true), (_, v) =>
+      typeof v === 'bigint' ? v.toString() : v,
+    );
   }
 
-  public decodePacket(encodedPacket: string): Encodable {
-    const packet = JSON.parse(encodedPacket);
-    return this.replaceKeysAndValues(packet, false);
+  decodePacket(packet: string): Encodable {
+    return this.transform(JSON.parse(packet), false);
   }
 
-  private replaceKeysAndValues(obj: Encodable, encode: boolean): Encodable {
-    const type = typeof obj;
+  private transform(obj: Encodable, encode: boolean): Encodable {
+    if (['function', 'symbol', 'undefined'].includes(typeof obj)) {
+      throw new Error(`Unsupported type: ${typeof obj}`);
+    }
 
-    if (['function', 'symbol', 'undefined'].includes(type)) {
-      throw new Error(`Unsupported type: ${type}`);
+    if (typeof obj === 'string') {
+      return encode ? this.encodeString(obj) : this.decodeString(obj);
     }
 
     if (Array.isArray(obj)) {
-      return obj.map((item) => this.replaceKeysAndValues(item, encode));
+      return obj.map((item) => this.transform(item, encode));
     }
 
-    if (type === 'object') {
-      const newObj: { [key: string]: Encodable } = {};
-      for (const [key, value] of Object.entries(obj)) {
-        const newKey = encode
-          ? this.keysMapping[key] || key
-          : Object.keys(this.keysMapping).find(
-              (k) => this.keysMapping[k] === key,
-            ) || key;
-        newObj[newKey] = this.replaceKeysAndValues(value as Encodable, encode);
-      }
-      return newObj;
-    }
-
-    if (typeof obj === 'bigint') {
-      return encode ? obj.toString() : BigInt(obj);
+    if (typeof obj === 'object' && obj !== null) {
+      return this.transformObject(obj, encode);
     }
 
     return obj;
+  }
+
+  private encodeString(str: string): string {
+    return this.keysMapping[str] ?? str;
+  }
+
+  private decodeString(encodedStr: string): string {
+    return this.reverseKeysMapping[encodedStr] ?? encodedStr;
+  }
+
+  private transformObject(
+    obj: { [key: string]: Encodable },
+    encode: boolean,
+  ): { [key: string]: Encodable } {
+    const newObj: { [key: string]: Encodable } = {};
+    const keys = Object.keys(obj);
+
+    for (const key of keys) {
+      const newKey = encode ? this.encodeString(key) : this.decodeString(key);
+      newObj[newKey] = this.transform(obj[key], encode);
+    }
+
+    return newObj;
   }
 }
