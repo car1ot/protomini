@@ -1,9 +1,9 @@
-import { ProtoMini } from "./index";
+import { ProtoMini } from '../src/index';
 
-test("should encode and decode packets with nested objects", () => {
-  const p = new ProtoMini({ nest: "n", level: "l", item: "i" });
+test('should encode and decode packets with nested objects', () => {
+  const p = new ProtoMini({ nest: 'n', level: 'l', item: 'i' });
 
-  const originalPacket = { nest: { level: { item: "value" } } };
+  const originalPacket = { nest: { level: { item: 'value' } } };
   const encoded = p.encodePacket(originalPacket);
   const decoded = p.decodePacket(encoded);
 
@@ -11,8 +11,8 @@ test("should encode and decode packets with nested objects", () => {
   expect(decoded).toEqual(originalPacket);
 });
 
-test("should encode and decode packets with arrays", () => {
-  const p = new ProtoMini({ items: "i" });
+test('should encode and decode packets with arrays', () => {
+  const p = new ProtoMini({ items: 'i' });
 
   const originalPacket = { items: [1, 2, 3] };
   const encoded = p.encodePacket(originalPacket);
@@ -22,10 +22,10 @@ test("should encode and decode packets with arrays", () => {
   expect(decoded).toEqual(originalPacket);
 });
 
-test("should encode and decode packets with mixed data", () => {
-  const p = new ProtoMini({ mix: "m", obj: "o", arr: "a" });
+test('should encode and decode packets with mixed data', () => {
+  const p = new ProtoMini({ mix: 'm', obj: 'o', arr: 'a' });
 
-  const originalPacket = { mix: [1, { obj: "object" }, ["array"]] };
+  const originalPacket = { mix: [1, { obj: 'object' }, ['array']] };
   const encoded = p.encodePacket(originalPacket);
   const decoded = p.decodePacket(encoded);
 
@@ -33,8 +33,8 @@ test("should encode and decode packets with mixed data", () => {
   expect(decoded).toEqual(originalPacket);
 });
 
-test("should encode and decode packets with boolean values", () => {
-  const p = new ProtoMini({ flag: "f" });
+test('should encode and decode packets with boolean values', () => {
+  const p = new ProtoMini({ flag: 'f' });
 
   const originalPacket = { flag: true };
   const encoded = p.encodePacket(originalPacket);
@@ -44,17 +44,17 @@ test("should encode and decode packets with boolean values", () => {
   expect(decoded).toEqual(originalPacket);
 });
 
-test("should encode and decode packets with string values", () => {
-  const p = new ProtoMini({ string: "s" });
-  const originalPacket = { string: "hello" };
+test('should encode and decode packets with string values', () => {
+  const p = new ProtoMini({ string: 's' });
+  const originalPacket = { string: 'hello' };
   const encoded = p.encodePacket(originalPacket);
   const decoded = p.decodePacket(encoded);
   expect(encoded).toBe('{"s":"hello"}');
   expect(decoded).toEqual(originalPacket);
 });
 
-test("should encode and decode packets with number values", () => {
-  const p = new ProtoMini({ number: "n" });
+test('should encode and decode packets with number values', () => {
+  const p = new ProtoMini({ number: 'n' });
   const originalPacket = { number: 42 };
   const encoded = p.encodePacket(originalPacket);
   const decoded = p.decodePacket(encoded);
@@ -62,17 +62,17 @@ test("should encode and decode packets with number values", () => {
   expect(decoded).toEqual(originalPacket);
 });
 
-test("should encode and decode packets with BigInt values", () => {
-  const p = new ProtoMini({ bigInt: "b" });
+test('should encode and decode packets with BigInt values', () => {
+  const p = new ProtoMini({ bigInt: 'b' });
   const originalPacket = { bigInt: BigInt(9007199254740991) };
   const encoded = p.encodePacket(originalPacket);
   const decoded = p.decodePacket(encoded);
   expect(encoded).toBe('{"b":"9007199254740991"}');
-  expect(decoded).toEqual({ bigInt: "9007199254740991" }); // BigInt is converted to string during encoding
+  expect(decoded).toEqual({ bigInt: '9007199254740991' }); // BigInt is converted to string during encoding
 });
 
-test("should encode and decode packets with boolean values", () => {
-  const p = new ProtoMini({ boolean: "b" });
+test('should encode and decode packets with boolean values', () => {
+  const p = new ProtoMini({ boolean: 'b' });
   const originalPacket = { boolean: true };
   const encoded = p.encodePacket(originalPacket);
   const decoded = p.decodePacket(encoded);
@@ -80,14 +80,15 @@ test("should encode and decode packets with boolean values", () => {
   expect(decoded).toEqual(originalPacket);
 });
 
-test("should throw error for unsupported types", () => {
+test('should throw error for unsupported types', () => {
   const p = new ProtoMini({});
-  // @ts-ignore
-  expect(() => p.encodePacket(() => {})).toThrow("Unsupported type: function");
-  // @ts-ignore
-  expect(() => p.encodePacket(Symbol())).toThrow("Unsupported type: symbol");
-  // @ts-ignore
-  expect(() => p.encodePacket(undefined)).toThrow(
-    "Unsupported type: undefined"
-  );
+
+  const fn: any = () => {};
+  expect(() => p.encodePacket(fn)).toThrow('Unsupported type: function');
+
+  const sym: any = Symbol();
+  expect(() => p.encodePacket(sym)).toThrow('Unsupported type: symbol');
+
+  const undef: any = undefined;
+  expect(() => p.encodePacket(undef)).toThrow('Unsupported type: undefined');
 });

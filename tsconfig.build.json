@@ -1,0 +1,5 @@
+{
+  // Build specific configuration (excludes tests from being compiled)
+  "extends": "./tsconfig.json",
+  "exclude": ["./test/**/*"]
+}

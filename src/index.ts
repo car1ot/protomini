@@ -1,5 +1,5 @@
 type KeyMapping = { [key: string]: string };
-type Primitive = string | number | BigInt | boolean;
+type Primitive = string | number | bigint | boolean;
 type Encodable = Primitive | Encodable[] | { [key: string]: Encodable };
 
 export class ProtoMini {
@@ -22,7 +22,7 @@ export class ProtoMini {
   private replaceKeysAndValues(obj: Encodable, encode: boolean): Encodable {
     const type = typeof obj;
 
-    if (["function", "symbol", "undefined"].includes(type)) {
+    if (['function', 'symbol', 'undefined'].includes(type)) {
       throw new Error(`Unsupported type: ${type}`);
     }
 
@@ -30,20 +30,20 @@ export class ProtoMini {
       return obj.map((item) => this.replaceKeysAndValues(item, encode));
     }
 
-    if (type === "object") {
+    if (type === 'object') {
       const newObj: { [key: string]: Encodable } = {};
       for (const [key, value] of Object.entries(obj)) {
         const newKey = encode
           ? this.keysMapping[key] || key
           : Object.keys(this.keysMapping).find(
-              (k) => this.keysMapping[k] === key
+              (k) => this.keysMapping[k] === key,
             ) || key;
         newObj[newKey] = this.replaceKeysAndValues(value as Encodable, encode);
       }
       return newObj;
     }
 
-    if (typeof obj === "bigint") {
+    if (typeof obj === 'bigint') {
       return encode ? obj.toString() : BigInt(obj);
     }
 

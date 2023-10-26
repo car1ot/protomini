@@ -5,9 +5,11 @@
   "main": "index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "test": "jest",
-    "build": "tsc",
-    "prepublishOnly": "npm run build"
+    "deploy": "npm version patch && git push --tags && git push",
+    "build": "tsc -p tsconfig.build.json",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "eslint src/**/*.ts --fix",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -33,10 +35,17 @@
   },
   "homepage": "https://github.com/car1ot/protomini#readme",
   "devDependencies": {
+    "@types/babel__traverse": "^7.20.3",
     "@types/jest": "^29.5.6",
     "@types/node": "^20.8.9",
     "jest": "^29.7.0",
     "ts-jest": "^29.1.1",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "@typescript-eslint/eslint-plugin": "^6.8.0",
+    "@typescript-eslint/parser": "^6.8.0",
+    "eslint": "^8.51.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "prettier": "^3.0.3"
   }
 }
