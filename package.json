@@ -2,7 +2,7 @@
   "name": "protomini",
   "version": "0.0.1",
   "description": "Minimize and optimize and simplify and miniaturize your network packets for optimal speed and efficiency with ProtoMini.",
-  "main": "index.js",
+  "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "deploy": "npm version patch && git push --tags && git push",
