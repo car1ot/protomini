@@ -1,6 +1,6 @@
 # ProtoMini
 
-![ProtoMini Logo](./assets/logo.png)
+![ProtoMini Logo](https://i.imgur.com/EAu5bx4.png)
 
 [![npm version](https://img.shields.io/npm/v/protomini.svg)](https://www.npmjs.com/package/protomini)
 [![Build Status](https://img.shields.io/github/workflow/status/car1ot/protomini/CI)](https://github.com/car1ot/protomini/actions)
