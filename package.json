@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/car1ot/protomini.git"
+    "url": "git://github.com/car1ot/protomini.git"
   },
   "keywords": [
     "networking",
@@ -28,12 +28,15 @@
     "real-time",
     "game-development"
   ],
-  "author": "https://github.com/car1ot",
+  "author": "car1ot <car1ot635@gmail.com | https://github.com/car1ot/>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/car1ot/protomini/issues"
   },
   "homepage": "https://github.com/car1ot/protomini#readme",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "devDependencies": {
     "@types/babel__traverse": "^7.20.3",
     "@types/jest": "^29.5.6",
