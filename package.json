@@ -28,6 +28,11 @@
     "real-time",
     "game-development"
   ],
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md"
+  ],
   "author": "car1ot <car1ot635@gmail.com | https://github.com/car1ot/>",
   "license": "MIT",
   "bugs": {

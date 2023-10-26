@@ -1,9 +1,6 @@
 # Node modules
 node_modules/
 
-# Build files
-dist/
-
 # Logs
 npm-debug.log
 yarn-error.log

@@ -41,13 +41,18 @@ jobs:
       - name: Check npm version
         run: npm --version
 
-      - name: Install dependencies and run tests
+      - name: Install dependencies
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm ci
+
+      - name: Build TypeScript
+        run: npm run build
+
+      - name: Lint and run tests
         run: |
-          npm ci
           npm run lint
-          npm run build
+          npm run test
 
   deploy:
     name: Deploy to NPM
