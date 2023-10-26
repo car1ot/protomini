@@ -20,13 +20,13 @@ Minimize and optimize your network packets for optimal speed and efficiency with
 
 ## Installation
 
-\`\`\`bash
+```bash
 npm install protomini
-\`\`\`
+```
 
 ## Usage
 
-\`\`\`typescript
+```typescript
 import { ProtoMini } from 'protomini';
 
 const p = new ProtoMini({ foo: "f", bar: "b" });
@@ -34,7 +34,7 @@ const p = new ProtoMini({ foo: "f", bar: "b" });
 const originalPacket = { foo: ["bar", { bar: "bar" }] };
 const encoded = p.encodePacket(originalPacket);
 const decoded = p.decodePacket(encoded);
-\`\`\`
+```
 
 ## API Reference
 
@@ -54,13 +54,9 @@ Decode an encoded packet.
 
 Run tests using Jest:
 
-\`\`\`bash
+```bash
 npm test
-\`\`\`
-
-## Contributing
-
-See [CONTRIBUTING.md](./CONTRIBUTING.md)
+```
 
 ## License
 
