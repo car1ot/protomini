@@ -11,6 +11,28 @@ test('should encode and decode packets with nested objects', () => {
   expect(decoded).toEqual(originalPacket);
 });
 
+test('should encode and decode packets with caps values', () => {
+  const p = new ProtoMini({ TEST: 't', FOO_BAR: 'fb' });
+
+  const originalPacket = {
+    TEST: {
+      level: {
+        55: true,
+        item: 'FOO_BAR',
+        FOO_BAR: 111,
+        xxxxxxxxxxxxxxxxxxxxxxx: ['FOO_BAR', 'TEST'],
+      },
+    },
+  };
+  const encoded = p.encodePacket(originalPacket);
+  const decoded = p.decodePacket(encoded);
+
+  expect(encoded).toBe(
+    '{"t":{"level":{"55":true,"item":"fb","fb":111,"xxxxxxxxxxxxxxxxxxxxxxx":["fb","t"]}}}',
+  );
+  expect(decoded).toEqual(originalPacket);
+});
+
 test('should encode and decode packets with arrays', () => {
   const p = new ProtoMini({ items: 'i' });
 
