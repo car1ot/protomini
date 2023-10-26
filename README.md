@@ -46,15 +46,21 @@ const decodedPacket = protoMini.decodePacket(encodedPacket); // "foo omg, yeah, 
 
 ## API Reference
 
-### `constructor(keysMapping: { [key: string]: string })`
+```typescript
+type KeyMapping = { [key: string]: string };
+type Primitive = string | number | BigInt | boolean;
+type Encodable = Primitive | Encodable[] | { [key: string]: Encodable };
+```
+
+### `constructor(keysMapping: KeyMapping)`
 
 Initialize a new ProtoMini instance.
 
-### `encodePacket(packet: any): string`
+### `encodePacket(packet: Encodable): string`
 
 Encode a packet.
 
-### `decodePacket(encodedPacket: string): any`
+### `decodePacket(encodedPacket: string): Encodable`
 
 Decode an encoded packet.
 
