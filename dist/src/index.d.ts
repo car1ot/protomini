@@ -7,9 +7,13 @@ type Encodable = Primitive | Encodable[] | {
 };
 export declare class ProtoMini {
     private keysMapping;
+    private reverseKeysMapping;
     constructor(keysMapping: KeyMapping);
     encodePacket(packet: Encodable): string;
-    decodePacket(encodedPacket: string): Encodable;
-    private replaceKeysAndValues;
+    decodePacket(packet: string): Encodable;
+    private transform;
+    private encodeString;
+    private decodeString;
+    private transformObject;
 }
 export {};
